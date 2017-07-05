@@ -19,7 +19,8 @@ import { Component } from '@angular/core';
       <input [(ngModel)]="selectedKeg.price">
       <button (click)="finishedEditing()">Done</button>
     </div>
-    <div>
+    <button (click)="showNewKegForm()">Add a New Keg</button>
+    <div *ngIf="newKegForm">
       <h3>Add a New Keg</h3>
       <label>Name:</label>
       <input #newName>
@@ -34,12 +35,12 @@ import { Component } from '@angular/core';
       <input #newAlcoholContent>
       <br>
       <label>Style:</label>
-      <select>
-        <option *ngFor="let style of styles" value="styles.value"  #newStyle>
+      <select #newStyle>
+        <option *ngFor="let style of styles" value="{{style.value}}">
         {{style.display}}</option>
       </select>
       <br>
-      <button (click)="addKeg(newName.value, newBrand.value, newStyle.value, newPrice.value, newAlcoholContent.value)">Submit</button>
+      <button (click)="addKeg(newName.value, newBrand.value, newStyle.value, newPrice.value, newAlcoholContent.value)" (click)="hideNewKegForm()">Submit</button>
     </div>
   </div>
   `
@@ -56,6 +57,7 @@ export class AppComponent {
     new Keg('Dry-Hopped Barleywine', 'Sierra Nevada/Avery', 'Barleywine', 7, 9.4),
     new Keg('Hoppy A-Hefe', 'StormBreaker', 'Hefeweizen', 6, 5.0),
     new Keg('Swami’s IPA', 'Pizza Port', 'IPA', 6, 6.8)  ];
+  newKegForm: boolean = false;
   selectedKeg: Keg = null;
   styles = [
     { value: 'Amber Ale', display: 'Amber Ale'},
@@ -88,7 +90,7 @@ export class AppComponent {
   }
 
   strong(currentKeg){
-    if(currentKeg.alcoholContent <= 6.5){
+    if(currentKeg.alcoholContent >= 6.5){
       return "strong";
     }
   }
@@ -127,6 +129,14 @@ export class AppComponent {
 
   finishedEditing() {
     this.selectedKeg = null;
+  }
+
+  hideNewKegForm() {
+    this.newKegForm = false;
+  }
+
+  showNewKegForm() {
+    this.newKegForm = true;
   }
 }
 
