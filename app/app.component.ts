@@ -7,8 +7,9 @@ import { Component } from '@angular/core';
     <h1>Taproom</h1>
     <h3>Currently on tap:</h3>
     <ul>
-      <li [class]="isAlmostEmpty(currentKeg)" (click)="isAlmostEmpty(currentKeg)" *ngFor="let currentKeg of kegs"><span [class]="strong(currentKeg)">{{currentKeg.brand}}, {{currentKeg.name}},  {{currentKeg.alcoholContent}}%, <span [class]="priceColor(currentKeg)">$ {{currentKeg.price}} </span>, {{currentKeg.pints}}</span> <button (click)="editKeg(currentKeg)">Edit!</button> <button (click)="sellPint(currentKeg)">Sold a Pint!</button></li>
+      <li [class]="isAlmostEmpty(currentKeg)" (click)="isAlmostEmpty(currentKeg)" *ngFor="let currentKeg of kegs"><span [class]="strong(currentKeg)">{{currentKeg.name}} by {{currentKeg.brand}}, Style: {{currentKeg.style}}, {{currentKeg.alcoholContent}}%, <span [class]="priceColor(currentKeg)">$ {{currentKeg.price}} </span>, Pints Left: {{currentKeg.pints}}</span> <button (click)="editKeg(currentKeg)">Edit Price</button> <button (click)="sellPint(currentKeg)">Sold a Pint</button> <button (click)="sellSmallGrowler(currentKeg)">Sold a Small Growler</button> <button (click)="sellLargeGrowler(currentKeg)">Sold a Large Growler</button></li>
     </ul>
+    <!-- <button (click)="sortByStyle(kegs)">Sort</button> -->
     <hr>
     <div>
       <label><h3>Edit {{selectedKeg.name}}'s Price/pint:</h3></label>
@@ -28,7 +29,13 @@ import { Component } from '@angular/core';
       <label>Alcohol Content:</label>
       <input #newAlcoholContent>
       <br>
-      <button (click)="addKeg(newName.value, newBrand.value, newPrice.value, newAlcoholContent.value)">Submit</button>
+      <label>Style:</label>
+      <select>
+        <option *ngFor="let style of styles" value="styles.value"  #newStyle>
+        {{style.display}}</option>
+      </select>
+      <br>
+      <button (click)="addKeg(newName.value, newBrand.value, newStyle.value, newPrice.value, newAlcoholContent.value)">Submit</button>
     </div>
   </div>
   `
@@ -36,16 +43,35 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
   kegs: Keg[] = [
-    new Keg('Chocolate Hazelnut Porter', 'Heretic', 6, 7.0),
-    new Keg('Herbs of a Feather', 'Coalition', 6, 5.5),
-    new Keg('Spruce Saison', 'Propolis', 8, 7.5),
-    new Keg('Brett IPA', 'pFriem', 6, 6.6),
-    new Keg('Rocketman Red', 'Rocketman Red', 5, 5.5),
-    new Keg('Porter', 'Anchor', 5, 5.6),
-    new Keg('Dry-Hopped Barleywine', 'Sierra Nevada/Avery', 7, 9.4),
-    new Keg('Hoppy A-Hefe', 'StormBreaker', 6, 5.0),
-    new Keg('Swami’s IPA', 'Pizza Port', 6, 6.8)  ];
+    new Keg('Chocolate Hazelnut Porter', 'Heretic', 'Porter', 6, 7.0),
+    new Keg('Herbs of a Feather', 'Coalition', 'Sour Ale', 6, 5.5),
+    new Keg('Spruce Saison', 'Propolis', 'Saison', 8, 7.5),
+    new Keg('Brett IPA', 'pFriem', 'IPA', 6, 6.6),
+    new Keg('Rocketman Red', 'Rocketman Red', 'Red Ale', 5, 5.5),
+    new Keg('Porter', 'Anchor', 'Porter', 5, 5.6),
+    new Keg('Dry-Hopped Barleywine', 'Sierra Nevada/Avery', 'Barleywine', 7, 9.4),
+    new Keg('Hoppy A-Hefe', 'StormBreaker', 'Hefeweizen', 6, 5.0),
+    new Keg('Swami’s IPA', 'Pizza Port', 'IPA', 6, 6.8)  ];
   selectedKeg: Keg = this.kegs[0];
+  styles = [
+    { value: 'Amber Ale', display: 'Amber Ale'},
+    { value: 'Barleywine', display: 'Barleywine'},
+    { value: 'Belgian Wit', display: 'Belgian Wit'},
+    { value: 'Brown', display: 'Brown'},
+    { value: 'Cider', display: 'Cider'},
+    { value: 'Double IPA', display: 'Double IPA'},
+    { value: 'Hefeweizen', display: 'Hefeweizen'},
+    { value: 'IPA', display: 'IPA'},
+    { value: 'Lager', display: 'Lager'},
+    { value: 'Pale Ale', display: 'Pale Ale'},
+    { value: 'Porter', display: 'Porter'},
+    { value: 'Pilsner', display: 'Pilsner'},
+    { value: 'Red Ale', display: 'Red Ale'},
+    { value: 'Saison', display: 'Saison'},
+    { value: 'Sour Ale', display: 'Sour Ale'},
+    { value: 'Stout', display: 'Stout'},
+    { value: 'Wheat', display: 'Wheat'},
+  ];
 
   priceColor(currentKeg){
     if (currentKeg.price >= 8){
@@ -71,8 +97,21 @@ export class AppComponent {
     clickedKeg.pints -= 1;
   }
 
-  addKeg(name: string, brand: string, price: number, alcoholContent: number) {
-    var newKeg = new Keg(name, brand, price, alcoholContent);
+  sellSmallGrowler(clickedKeg: Keg){
+    clickedKeg.pints -= 2;
+  }
+
+  // sortByStyle(kegs) {
+  //   (kegs).sort(kegs.style);
+  //   console.log(kegs[].style);
+  // }
+
+  sellLargeGrowler(clickedKeg: Keg){
+    clickedKeg.pints -= 4;
+  }
+
+  addKeg(name: string, brand: string, style: string, price: number, alcoholContent: number) {
+    var newKeg = new Keg(name, brand, style, price, alcoholContent);
     this.kegs.push(newKeg);
   }
 
@@ -86,5 +125,5 @@ export class AppComponent {
 export class Keg {
   public empty: boolean = false;
   public pints: number = 124;
-  constructor(public name: string, public brand: string, public price: number, public alcoholContent: number) {   }
+  constructor(public name: string, public brand: string, public style: string, public price: number, public alcoholContent: number) {   }
 }
