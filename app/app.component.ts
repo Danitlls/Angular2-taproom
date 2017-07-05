@@ -7,13 +7,17 @@ import { Component } from '@angular/core';
     <h1>Taproom</h1>
     <h3>Currently on tap:</h3>
     <ul>
-      <li [class]="isAlmostEmpty(currentKeg)" (click)="isAlmostEmpty(currentKeg)" *ngFor="let currentKeg of kegs"><span [class]="strong(currentKeg)">{{currentKeg.name}} by {{currentKeg.brand}}, Style: {{currentKeg.style}}, {{currentKeg.alcoholContent}}%, <span [class]="priceColor(currentKeg)">$ {{currentKeg.price}} </span>, Pints Left: {{currentKeg.pints}}</span> <button (click)="editKeg(currentKeg)">Edit Price</button> <button (click)="sellPint(currentKeg)">Sold a Pint</button> <button (click)="sellSmallGrowler(currentKeg)">Sold a Small Growler</button> <button (click)="sellLargeGrowler(currentKeg)">Sold a Large Growler</button></li>
+      <li [class]="isAlmostEmpty(currentKeg)"
+      (click)="isAlmostEmpty(currentKeg)"
+      *ngFor="let currentKeg of kegs">
+      <span [class]="strong(currentKeg)">{{currentKeg.name}} by {{currentKeg.brand}}, Style: {{currentKeg.style}}, {{currentKeg.alcoholContent}}%, <span [class]="priceColor(currentKeg)">$ {{currentKeg.price}} </span>, Pints Left: {{currentKeg.pints}}</span> <button (click)="editKeg(currentKeg)">Edit Price</button> <button (click)="sellPint(currentKeg)">Sold a Pint</button> <button (click)="sellSmallGrowler(currentKeg)">Sold a Small Growler</button> <button (click)="sellLargeGrowler(currentKeg)">Sold a Large Growler</button></li>
     </ul>
     <!-- <button (click)="sortByStyle(kegs)">Sort</button> -->
     <hr>
-    <div>
+    <div *ngIf="selectedKeg">
       <label><h3>Edit {{selectedKeg.name}}'s Price/pint:</h3></label>
       <input [(ngModel)]="selectedKeg.price">
+      <button (click)="finishedEditing()">Done</button>
     </div>
     <div>
       <h3>Add a New Keg</h3>
@@ -52,7 +56,7 @@ export class AppComponent {
     new Keg('Dry-Hopped Barleywine', 'Sierra Nevada/Avery', 'Barleywine', 7, 9.4),
     new Keg('Hoppy A-Hefe', 'StormBreaker', 'Hefeweizen', 6, 5.0),
     new Keg('Swami’s IPA', 'Pizza Port', 'IPA', 6, 6.8)  ];
-  selectedKeg: Keg = this.kegs[0];
+  selectedKeg: Keg = null;
   styles = [
     { value: 'Amber Ale', display: 'Amber Ale'},
     { value: 'Barleywine', display: 'Barleywine'},
@@ -119,6 +123,10 @@ export class AppComponent {
     if(clickedKeg.pints <= 10) {
       return "bg-danger";
     }
+  }
+
+  finishedEditing() {
+    this.selectedKeg = null;
   }
 }
 
