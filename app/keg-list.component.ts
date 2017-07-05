@@ -4,10 +4,14 @@ import { Keg } from './keg.model';
 @Component({
   selector: 'keg-list',
   template: `
+  <select (change)="onChange($event.target.value)">
+    <option value="allKegs" selected="selected">ALL KEGS</option>
+    <option value="kegsToReorder">KEGS TO REORDER</option>
+  </select>
   <ul>
     <li [class]="isAlmostEmpty(currentKeg)"
     (click)="isAlmostEmpty(currentKeg)"
-    *ngFor="let currentKeg of childKegList">
+    *ngFor="let currentKeg of childKegList | emptiness:filterByEmptiness">
     <span [class]="strong(currentKeg)">{{currentKeg.name}} by {{currentKeg.brand}}, Style: {{currentKeg.style}}, {{currentKeg.alcoholContent}}%, <span [class]="priceColor(currentKeg)">$ {{currentKeg.price}} </span>, Pints Left: {{currentKeg.pints}}</span> <button (click)="editButtonHasBeenClicked(currentKeg)">Edit Price</button> <button (click)="sellPint(currentKeg)">Sold a Pint</button> <button (click)="sellSmallGrowler(currentKeg)">Sold a Small Growler</button> <button (click)="sellLargeGrowler(currentKeg)">Sold a Large Growler</button></li>
   </ul>
   `
@@ -17,6 +21,11 @@ export class KegListComponent {
   @Input() childKegList: Keg[];
   @Output() clickSender = new EventEmitter();
 
+  filterByEmptiness: string = "allKegs";
+
+  onChange(optionFromMenu) {
+    this.filterByEmptiness = optionFromMenu;
+  }
 
   editButtonHasBeenClicked(kegToEdit: Keg) {
     this.clickSender.emit(kegToEdit);
