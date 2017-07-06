@@ -4,7 +4,7 @@ import { Keg } from './keg.model';
 @Component({
   selector: 'app-root',
   template: `
-  <div class="container">
+  <div class="container1">
     <h1>Taproom</h1>
     <h3>Currently on tap:</h3>
     <keg-list [childKegList]="masterKegList" (clickSender)="editKeg($event)"></keg-list>
@@ -33,6 +33,25 @@ export class AppComponent {
     new Keg('PBR', 'PBR', 'Pale Ale', 2, 5.4, 12)
   ];
 
+  // masterStylesList = [
+  //   { value: 'Amber Ale', display: 'Amber Ale'},
+  //   { value: 'Barleywine', display: 'Barleywine'},
+  //   { value: 'Belgian Wit', display: 'Belgian Wit'},
+  //   { value: 'Brown', display: 'Brown'},
+  //   { value: 'Cider', display: 'Cider'},
+  //   { value: 'Double IPA', display: 'Double IPA'},
+  //   { value: 'Hefeweizen', display: 'Hefeweizen'},
+  //   { value: 'IPA', display: 'IPA'},
+  //   { value: 'Lager', display: 'Lager'},
+  //   { value: 'Pale Ale', display: 'Pale Ale'},
+  //   { value: 'Porter', display: 'Porter'},
+  //   { value: 'Pilsner', display: 'Pilsner'},
+  //   { value: 'Red Ale', display: 'Red Ale'},
+  //   { value: 'Saison', display: 'Saison'},
+  //   { value: 'Sour Ale', display: 'Sour Ale'},
+  //   { value: 'Stout', display: 'Stout'},
+  //   { value: 'Wheat', display: 'Wheat'},
+  // ];
 
   finishedEditing() {
       this.selectedKeg = null;
