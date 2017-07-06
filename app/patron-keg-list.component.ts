@@ -5,6 +5,17 @@ import { Keg } from './keg.model';
 @Component({
   selector: 'patron-keg-list',
   template: `
+  <div *ngIf="showHappy">
+    <button id="show-happy" (click)="happyHour()">VIEW HAPPY HOUR MENU</button>
+    <br>
+    <h4>REGULAR MENU</h4>
+  </div>
+  <div *ngIf="showRegular">
+    <button id="show-not-happy" (click)="regularHour()">VIEW REGULAR MENU</button>
+    <br>
+    <h4>HAPPY HOUR MENU</h4>
+  </div>
+  <br>
     <select (change)="onStyleChange($event.target.value)">
       <option value="allStyles" selected="selected">
     All Styles</option>
@@ -18,12 +29,16 @@ import { Keg } from './keg.model';
       *ngFor="let currentKeg of childKegList | beerStyles:filterByStyle">
       <span [class]="strong(currentKeg)">{{currentKeg.name}} by {{currentKeg.brand}}<br> Style: {{currentKeg.style}}<br> {{currentKeg.alcoholContent}}<br><span [class]="priceColor(currentKeg)">$ {{currentKeg.price}} </span><br> Pints Left: {{currentKeg.pints}}</span></li>
     </ul>
+    <hr>
   `
 })
 
 export class PatronKegListComponent {
   @Input() childKegList: Keg[];
   @Output() clickSender = new EventEmitter();
+
+  showHappy: boolean = true;
+  showRegular: boolean = false;
 
   styles = [
     { value: 'Amber Ale', display: 'Amber Ale'},
@@ -45,12 +60,7 @@ export class PatronKegListComponent {
     { value: 'Witbier', display: 'Witbier'}
   ];
 
-  // filterByEmptiness: string = "allKegs";
   filterByStyle: string = "allStyles";
-
-  // onEmptinessChange(optionFromMenu) {
-  //   this.filterByEmptiness = optionFromMenu;
-  // }
 
   onStyleChange(optionFromMenu) {
     this.filterByStyle = optionFromMenu;
@@ -77,11 +87,21 @@ export class PatronKegListComponent {
       return "bg-danger";
     }
   }
+
+  happyHour(currentKeg) {
+    this.showHappy = false;
+    this.showRegular = true;
+    for (var keg in this.childKegList) {
+      this.childKegList[keg].price -= 1;
+    }
+  }
+
+  regularHour(kegs) {
+    this.showHappy = true;
+    this.showRegular = false;
+    for (var keg in this.childKegList) {
+      this.childKegList[keg].price += 1;
+    }
+  }
+
 }
-
-// <select (change)="onEmptinessChange($event.target.value)">
-//   <option value="allKegs" selected="selected">ALL KEGS</option>
-//   <option value="kegsToReorder">KEGS TO REORDER</option>
-// </select>
-
-// emptiness:filterByEmptiness
