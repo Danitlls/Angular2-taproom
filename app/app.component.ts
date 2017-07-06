@@ -3,8 +3,11 @@ import { Keg } from './keg.model';
 
 @Component({
   selector: 'app-root',
+  styleUrls: ['resources/styles/main.scss'],
+
+  // encapsulation: ViewEncapsulation.None,
   template: `
-  <div class="container1">
+  <section>
     <h1>Taproom</h1>
     <h3>Currently on tap:</h3>
     <keg-list [childKegList]="masterKegList" (clickSender)="editKeg($event)"></keg-list>
@@ -12,7 +15,7 @@ import { Keg } from './keg.model';
     <edit-keg [childSelectedKeg]="selectedKeg" (doneButtonClickedSender)="finishedEditing()"></edit-keg>
 
     <new-keg (newKegSender)="addKeg($event)"></new-keg>
-  </div>
+  </section>
   `
 })
 
@@ -30,28 +33,17 @@ export class AppComponent {
     new Keg('Dry-Hopped Barleywine', 'Sierra Nevada/Avery', 'Barleywine', 7, 9.4),
     new Keg('Hoppy A-Hefe', 'StormBreaker', 'Hefeweizen', 6, 5.0),
     new Keg('Swami’s IPA', 'Pizza Port', 'IPA', 6, 6.8),
-    new Keg('PBR', 'PBR', 'Pale Ale', 2, 5.4, 12)
+    new Keg('PBR', 'PBR', 'Pale Ale', 2, 5.4, 12),
+    new Keg('Evil Dead Red', 'AleSmith', 'Amber Ale', 7, 7.2),
+    new Keg('Wonka’s Wit', 'Block 15', 'Witbier', 6, 5.0),
+    new Keg('Nut Brown Ale - Barrel Aged', 'AleSmith', 'Brown', 6, 5.0),
+    new Keg('Blueberry Spaceship Box Cider', 'Superstition', 'Cider', 5, 6.9),
+    new Keg('Heady Topper', 'Alchemist', 'Double IPA', 8, 8.0),
+    new Keg('Vienna Lager', 'pFriem', 'Lager', 6, 5.3),
+    new Keg('Pub Reserve Series: Pilsner Pie', 'Deschutes', 'Pilsner', 6, 5.8),
+    new Keg('City of the Dead', 'Modern Times', 'Stout', 7, 7.5),
+    new Keg('Hello My Name is Joe', '3 Sheeps', 'Wheat', 5, 7.7)
   ];
-
-  // masterStylesList = [
-  //   { value: 'Amber Ale', display: 'Amber Ale'},
-  //   { value: 'Barleywine', display: 'Barleywine'},
-  //   { value: 'Belgian Wit', display: 'Belgian Wit'},
-  //   { value: 'Brown', display: 'Brown'},
-  //   { value: 'Cider', display: 'Cider'},
-  //   { value: 'Double IPA', display: 'Double IPA'},
-  //   { value: 'Hefeweizen', display: 'Hefeweizen'},
-  //   { value: 'IPA', display: 'IPA'},
-  //   { value: 'Lager', display: 'Lager'},
-  //   { value: 'Pale Ale', display: 'Pale Ale'},
-  //   { value: 'Porter', display: 'Porter'},
-  //   { value: 'Pilsner', display: 'Pilsner'},
-  //   { value: 'Red Ale', display: 'Red Ale'},
-  //   { value: 'Saison', display: 'Saison'},
-  //   { value: 'Sour Ale', display: 'Sour Ale'},
-  //   { value: 'Stout', display: 'Stout'},
-  //   { value: 'Wheat', display: 'Wheat'},
-  // ];
 
   finishedEditing() {
       this.selectedKeg = null;
