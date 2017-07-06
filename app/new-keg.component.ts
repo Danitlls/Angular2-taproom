@@ -4,9 +4,9 @@ import { Keg } from './keg.model';
 @Component({
   selector: 'new-keg',
   template: `
-    <button (click)="showNewKegForm()">Add a New Keg</button>
-    <div *ngIf="newKegForm">
-    <h1>New Keg</h1>
+    <button (click)="showNewKegForm()" *ngIf="newKegButton">Add a New Keg</button>
+    <div id="form" *ngIf="newKegForm">
+    <h2>New Keg</h2>
       <h3>Add a New Keg</h3>
       <label>Name:</label>
       <input #newName>
@@ -33,6 +33,7 @@ import { Keg } from './keg.model';
 
 export class NewKegComponent {
   newKegForm: boolean = false;
+  newKegButton: boolean = true;
   @Output() newKegSender = new EventEmitter();
   styles = [
     { value: 'Amber Ale', display: 'Amber Ale'},
@@ -57,6 +58,7 @@ export class NewKegComponent {
   submitNewKegForm(name: string, brand: string, style: string, price: number, alcoholContent: number) {
     var newKeg = new Keg(name, brand, style, price, alcoholContent);
     this.newKegSender.emit(newKeg);
+    this.newKegButton = true;
   }
 
   hideNewKegForm() {
@@ -65,5 +67,6 @@ export class NewKegComponent {
 
   showNewKegForm() {
     this.newKegForm = true;
+    this.newKegButton = false;
   }
 }

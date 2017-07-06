@@ -15,7 +15,7 @@ import { Keg } from './keg.model';
     <li [class]="isAlmostEmpty(currentKeg)"
     (click)="isAlmostEmpty(currentKeg)"
     *ngFor="let currentKeg of childKegList | emptiness:filterByEmptiness">
-    <span [class]="strong(currentKeg)">{{currentKeg.name}} by {{currentKeg.brand}}<br> Style: {{currentKeg.style}}<br> {{currentKeg.alcoholContent}}<br><span [class]="priceColor(currentKeg)">$ {{currentKeg.price}} </span><br> Pints Left: {{currentKeg.pints}}</span> <button (click)="editButtonHasBeenClicked(currentKeg)">Edit Price</button> <button (click)="sellPint(currentKeg)">Sold a Pint</button> <button (click)="sellSmallGrowler(currentKeg)">Sold a Small Growler</button> <button (click)="sellLargeGrowler(currentKeg)">Sold a Large Growler</button></li>
+    <span [class]="strong(currentKeg)"><h3>{{currentKeg.name}} by {{currentKeg.brand}}</h3> Style: {{currentKeg.style}}<br> {{currentKeg.alcoholContent}}<br><span [class]="priceColor(currentKeg)">$ {{currentKeg.price}} </span><br> Pints Left: {{currentKeg.pints}}</span><span class="bttn"><button (click)="editButtonHasBeenClicked(currentKeg)">Edit Keg</button> <button (click)="sellPint(currentKeg)">Sold a Pint</button> <button (click)="sellSmallGrowler(currentKeg)">Sold a Small Growler</button> <button (click)="sellLargeGrowler(currentKeg)">Sold a Large Growler</button></span></li>
   </ul>
   `
 })

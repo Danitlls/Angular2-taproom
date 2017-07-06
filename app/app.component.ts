@@ -6,7 +6,7 @@ import { Keg } from './keg.model';
   styleUrls: ['resources/styles/main.scss'],
 
   template: `
-  <section>
+  <section class="center">
     <h1>Taproom</h1>
     <h3>Currently on tap:</h3>
     <div id="patron-portal" *ngIf="patronPortal">

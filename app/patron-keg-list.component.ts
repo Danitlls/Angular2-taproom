@@ -27,7 +27,7 @@ import { Keg } from './keg.model';
       <li [class]="isAlmostEmpty(currentKeg)"
       (click)="isAlmostEmpty(currentKeg)"
       *ngFor="let currentKeg of childKegList | beerStyles:filterByStyle">
-      <span [class]="strong(currentKeg)">{{currentKeg.name}} by {{currentKeg.brand}}<br> Style: {{currentKeg.style}}<br> {{currentKeg.alcoholContent}}<br><span [class]="priceColor(currentKeg)">$ {{currentKeg.price}} </span><br> Pints Left: {{currentKeg.pints}}</span></li>
+      <span [class]="strong(currentKeg)"><h3>{{currentKeg.name}} by {{currentKeg.brand}}</h3>Style: {{currentKeg.style}}<br> {{currentKeg.alcoholContent}}<br><span [class]="priceColor(currentKeg)">$ {{currentKeg.price}} </span><br> Pints Left: {{currentKeg.pints}}</span></li>
     </ul>
     <hr>
   `
