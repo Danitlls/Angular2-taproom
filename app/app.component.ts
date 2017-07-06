@@ -5,16 +5,23 @@ import { Keg } from './keg.model';
   selector: 'app-root',
   styleUrls: ['resources/styles/main.scss'],
 
-  // encapsulation: ViewEncapsulation.None,
   template: `
   <section>
     <h1>Taproom</h1>
     <h3>Currently on tap:</h3>
-    <keg-list [childKegList]="masterKegList" (clickSender)="editKeg($event)"></keg-list>
-    <hr>
-    <edit-keg [childSelectedKeg]="selectedKeg" (doneButtonClickedSender)="finishedEditing()"></edit-keg>
+    <div id="patron-portal" *ngIf="patronPortal">
+    <patron-keg-list [childKegList]="masterKegList"></patron-keg-list>
+    <button (click)="showEmployeePortal()" id="show-employee" >Show Employee Portal</button>
+    </div>
 
-    <new-keg (newKegSender)="addKeg($event)"></new-keg>
+    <div id="employee-portal" *ngIf="employeePortal">
+      <keg-list [childKegList]="masterKegList" (clickSender)="editKeg($event)"></keg-list>
+      <hr>
+      <edit-keg [childSelectedKeg]="selectedKeg" (doneButtonClickedSender)="finishedEditing()"></edit-keg>
+
+      <new-keg (newKegSender)="addKeg($event)"></new-keg>
+      <button (click)="showPatronPortal()" id="show-patron" >Show Patron Portal</button>
+    </div>
   </section>
   `
 })
@@ -22,6 +29,8 @@ import { Keg } from './keg.model';
 export class AppComponent {
   selectedKeg: Keg = null;
   newKegForm: boolean = false;
+  employeePortal: boolean = false;
+  patronPortal: boolean = true;
 
   masterKegList: Keg[] = [
     new Keg('Chocolate Hazelnut Porter', 'Heretic', 'Porter', 6, 7.0),
@@ -57,15 +66,16 @@ export class AppComponent {
     this.masterKegList.push(newKegFromChild)
   }
 
-  // sortByStyle(kegs) {
-  //   (kegs).sort(kegs.style);
-  //   console.log(kegs[].style);
-  // }
+  showEmployeePortal() {
+    this.employeePortal = true;
+    this.patronPortal = false;
+  }
 
-  // hideNewKegForm() {
-  //   this.newKegForm = false;
-  // }
-  //
+  showPatronPortal() {
+    this.employeePortal = false;
+    this.patronPortal = true;
+  }
+
   showNewKegForm() {
     this.newKegForm = true;
   }

@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Keg } from './keg.model';
-import { styles } from './styles.model';
 
 @Component({
   selector: 'new-keg',

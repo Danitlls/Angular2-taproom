@@ -1,3 +1,7 @@
+// #employee-portal {
+//   display: none;
+// }
+
 .strong {
   font-weight: bold;
 }
@@ -8,15 +12,22 @@
 }
 body{
   padding-bottom: 200px;
+  display: flex;
+  // :last-child{
+  //   align-self: center;
+  // }
 }
 button{
-  width: 500px;
+  width: 200px;
   text-align: center;
   background-color: lightblue;
   border: none;
-
+  min-height: 100px;
+  &:hover{
+    background-color: blue;
+    color: white;
+  }
 }
-
 ul {
   width: 100%;
   display: flex;
@@ -32,9 +43,13 @@ ul {
     height: 200px;
   }
   button {
-    width: 155px;
+    width: 50%;
     background-color: lightgrey;
     border: 1px solid grey;
+    &:hover{
+      background-color: grey;
+      color: white;
+    }
   }
   span{
     width: 100%;
@@ -43,4 +58,18 @@ ul {
     line-height: 2em;
     align-self: center;
   }
+}
+
+section{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+}
+
+#show-employee{
+  align-self: center;
+  margin: 20px;
+  height: 100px;
+  background-color: yellow;
 }
